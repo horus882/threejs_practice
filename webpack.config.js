@@ -11,13 +11,15 @@ const HtmlWebpackPlugin      = require('html-webpack-plugin')
 const MiniCSSExtractPlugin   = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-let fs = require('fs');
-const header = fs.readFileSync(__dirname + '/include/header.html');
+// let fs = require('fs');
+// const header = fs.readFileSync(__dirname + '/src/include/header.html');
 
 module.exports = {
+    target: 'web',
     mode: process.env.NODE_ENV,
     context: path.resolve(__dirname, './src'),
     entry: {
+        sample: ['./js/sample.js'],
         lv1: ['./js/lv1.js']
     },
     output: {
@@ -39,8 +41,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use:
-                [
+                use: [
                     'babel-loader'
                 ]
             },
@@ -48,18 +49,50 @@ module.exports = {
             // CSS
             {
                 test: /\.css$/,
-                use:
-                [
+                use: [
                     MiniCSSExtractPlugin.loader,
-                    'css-loader'
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    require('autoprefixer')({
+                                        grid: 'autoplace',
+                                    })
+                                ]
+                            }
+                        },
+                    },
+                ]
+            },
+
+            // SASS
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    MiniCSSExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    require('autoprefixer')({
+                                        grid: 'autoplace',
+                                    })
+                                ]
+                            }
+                        },
+                    },
+                    'sass-loader'
                 ]
             },
 
             // Images
             {
                 test: /\.(jpg|png|gif|svg)$/,
-                use:
-                [
+                use: [
                     {
                         loader: 'file-loader',
                         options:
@@ -77,8 +110,7 @@ module.exports = {
             // Fonts
             {
                 test: /\.(ttf|eot|woff|woff2)$/,
-                use:
-                [
+                use: [
                     {
                         loader: 'file-loader',
                         options:
@@ -97,21 +129,37 @@ module.exports = {
                 { from: path.resolve(__dirname, './static') }
             ]
         }),
-        new MiniCSSExtractPlugin(),
+        new MiniCSSExtractPlugin({
+            filename: './css/style.css?[hash:6]'
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/sample.html'),
+            minify: true,
+            inject: 'body',
+            chunks: ['sample'],
+            filename: 'sample.html',
+            minify: {
+                removeRedundantAttributes: false
+            }
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/lv1.html'),
             minify: true,
             inject: 'body',
             chunks: ['lv1'],
             filename: 'lv1.html',
-            header: header
+            minify: {
+                removeRedundantAttributes: false
+            }
+            // header: header
         }),
         new CleanWebpackPlugin()
     ],
     devServer: {
         host: '0.0.0.0',
         port: 7777,
-        contentBase: './dist',
+        // contentBase: './dist',
+        contentBase: path.join(__dirname, '/'),
         watchContentBase: true,
         open: true,
         https: false,
