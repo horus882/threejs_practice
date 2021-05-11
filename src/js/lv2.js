@@ -47,7 +47,7 @@ window['array'] = [
 		container: null,
 		inner: null,
 		speed: 5,
-		text: defaultData.text,
+		text: '臉書測試新功能「打擊假新聞」！鼓勵用戶分享前先這樣做',
 		textStyle: new PIXI.TextStyle(defaultData.textStyle),
 		direction: 'horizontal'
 	},
@@ -63,7 +63,7 @@ window['array'] = [
 		container: null,
 		inner: null,
 		speed: 4.5,
-		text: '( • ̀ω•́ )',
+		text: '#肥皂勤洗手 #避免用手觸碰眼口鼻 #正確配戴口罩',
 		textStyle: new PIXI.TextStyle({
 			fontSize: 120,
 			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
@@ -76,17 +76,88 @@ window['array'] = [
 		container: null,
 		inner: null,
 		speed: 3,
-		text: '午餐還沒吃',
+		text: '第一月台列車即將進站',
 		textStyle: new PIXI.TextStyle({
-			fontSize: 30,
+			fontSize: 40,
+			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
+			fontWeight: 700,
+			fill: [0xaaaaaa],
+			// wordWrap: true, // 啟用斷行
+			// wordWrapWidth: 30, // 長度多少就斷行
+			// breakWords: true
+		}),
+		direction: 'horizontal'
+	},
+	{
+		container: null,
+		inner: null,
+		speed: 2.75,
+		text: '確診者用餐客人錯愕！新北晶華亭餐廳緊急停業消毒',
+		textStyle: new PIXI.TextStyle({
+			fontSize: 50,
+			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
+			fontWeight: 700,
+			fill: [0xcccccc],
+			// wordWrap: true, // 啟用斷行
+			// wordWrapWidth: 30, // 長度多少就斷行
+			// breakWords: true
+		}),
+		direction: 'horizontal'
+	},
+	{
+		container: null,
+		inner: null,
+		speed: 3.25,
+		text: '周年慶活動中⭐️ ⭐️全館滿800免運!!!⭐️ ⭐️ 新品持續上架中',
+		textStyle: new PIXI.TextStyle({
+			fontSize: 65,
 			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
 			fontWeight: 700,
 			fill: [0xffffff],
-			wordWrap: true, // 啟用斷行
-			wordWrapWidth: 30, // 長度多少就斷行
-			breakWords: true
 		}),
-		direction: 'vertical'
+		direction: 'horizontal'
+	},
+	{
+		container: null,
+		inner: null,
+		speed: 4.15,
+		text: '[WDS] Live Reloading enabled.',
+		textStyle: new PIXI.TextStyle({
+			fontSize: 25,
+			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
+			fontWeight: 400,
+			fill: [0xffffff],
+		}),
+		direction: 'horizontal'
+	},
+	{
+		container: null,
+		inner: null,
+		speed: 2.25,
+		text: '我想吃水餃',
+		textStyle: new PIXI.TextStyle({
+			fontSize: 48,
+			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
+			fontWeight: 400,
+			fill: [0xffffff],
+		}),
+		direction: 'horizontal'
+	},
+	{
+		// container: null,
+		// inner: null,
+		// speed: 3,
+		// text: '第一月台列車即將進站',
+		// textStyle: new PIXI.TextStyle({
+		// 	fontSize: 40,
+		// 	fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
+		// 	fontWeight: 700,
+		// 	fill: [0xffffff],
+		// 	// wordWrap: true, // 啟用斷行
+		// 	// wordWrapWidth: 30, // 長度多少就斷行
+		// 	// breakWords: true
+		// }),
+		// direction: 'vertical'
 	}
 ];
 
@@ -94,13 +165,17 @@ gui.add(array[0], 'text').name('Container 1');
 gui.add(array[1], 'text').name('Container 2');
 gui.add(array[2], 'text').name('Container 3');
 gui.add(array[3], 'text').name('Container 4');
+gui.add(array[4], 'text').name('Container 5');
+gui.add(array[5], 'text').name('Container 6');
+gui.add(array[6], 'text').name('Container 7');
+gui.add(array[7], 'text').name('Container 8');
 
 function runThree() {
 
 	const scene     = new THREE.Scene();
 	const camera    = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 	const renderer  = new WebGLRenderer({ antialias: true });
-	scene.background = new THREE.Color(0x333333);
+	scene.background = new THREE.Color(0x222222);
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
 
@@ -239,6 +314,7 @@ function runPixi() {
 		// if (array[i].direction == 'vertical') {
 
 		// } else {
+			inner.x = 200;
 			inner.y = 0;
 			container.y = allContainersHeight;
 
@@ -262,8 +338,8 @@ function runPixi() {
 		mask.drawRect(100, 0, app.view.width - 100, container.height)
 		mask.endFill();
 
-		container.mask = mask;
-		container.addChild(mask)
+		// container.mask = mask;
+		// container.addChild(mask)
 
 		// var a = new PIXI.Graphics()
 		// 		.beginFill(0xff0000)
