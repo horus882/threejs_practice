@@ -1,0 +1,31 @@
+#lv2 {
+
+    canvas {
+        display: block;
+    }
+
+    #pixi {
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // transform: rotate3d(1, 1, 1, 45deg);
+        transform: rotateY(0deg) scale(1);
+    }
+
+    .dg.ac {
+        z-index: 2;
+    }
+
+    // #words {
+
+    //     position: relative;
+    //     width: 600px;
+    //     height: 600px;
+    //     color: #000;
+    //     font-size: 80px;
+    //     font-weight: 700;
+    //     background: #fff000;
+
+    // }
+
+}

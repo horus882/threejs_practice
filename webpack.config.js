@@ -20,7 +20,8 @@ module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: {
         sample: ['./js/sample.js'],
-        lv1: ['./js/lv1.js']
+        lv1: ['./js/lv1.js'],
+        lv2: ['./js/lv2.js']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -152,6 +153,16 @@ module.exports = {
                 removeRedundantAttributes: false
             }
             // header: header
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/lv2.html'),
+            minify: true,
+            inject: 'body',
+            chunks: ['lv2'],
+            filename: 'lv2.html',
+            minify: {
+                removeRedundantAttributes: false
+            }
         }),
         new CleanWebpackPlugin()
     ],
