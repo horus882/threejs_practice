@@ -31,7 +31,10 @@
   },
   "dependencies": {
     "dat.gui": "^0.7.7",
-    "three": "^0.126.0"
+    "html2canvas": "^1.0.0-rc.7",
+    "pixi.js": "^6.0.2",
+    "three": "^0.126.0",
+    "three-orbit-controls": "^82.1.0"
   },
   "browserslist": [
     "> 1%",
