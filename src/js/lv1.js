@@ -4,9 +4,10 @@ import * as THREE from 'three';
 import { PerspectiveCamera, WebGLRenderer } from 'three';
 // var OrbitControls = require('three-orbit-controls')(THREE)
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import html2canvas from 'html2canvas';
-
+import * as dat from 'dat.gui'
 import * as PIXI from 'pixi.js'
+
+const gui = new dat.GUI();
 
 let app  = null,
 	text = null;
@@ -39,6 +40,8 @@ window['defaultData'] = {
 	}
 }
 
+const date = new Date().toString();
+
 window['array'] = [
 	{
 		container: null,
@@ -50,7 +53,7 @@ window['array'] = [
 	{
 		container: null,
 		speed: 4,
-		text: new Date(),
+		text: date,
 		textStyle: new PIXI.TextStyle(defaultData.textStyle),
 		direction: 'horizontal'
 	},
@@ -83,7 +86,10 @@ window['array'] = [
 	}
 ];
 
-
+gui.add(array[0], 'text').name('Container 1');
+gui.add(array[1], 'text').name('Container 2');
+gui.add(array[2], 'text').name('Container 3');
+gui.add(array[3], 'text').name('Container 4');
 
 function runThree() {
 
