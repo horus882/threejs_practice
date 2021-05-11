@@ -113,6 +113,13 @@ function runThree() {
 
 	const controls = new OrbitControls(camera, renderer.domElement);
 
+	controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+	controls.dampingFactor = 0.05;
+
+	controls.screenSpacePanning = false;
+
+
+
 	var mouse = new THREE.Vector2();
 	var raycaster = new THREE.Raycaster();
 	var map = new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png');
@@ -177,6 +184,7 @@ function runThree() {
 		material.map = new THREE.Texture(app.view);
 		// 更新材質 Material, 記得要設定此屬性
 		material.map.needsUpdate = true;
+		controls.update();
 		renderer.render(scene, camera);
 	}
 
