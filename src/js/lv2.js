@@ -49,7 +49,7 @@ window['array'] = [
 		speed: 5,
 		text: '臉書測試新功能「打擊假新聞」！鼓勵用戶分享前先這樣做',
 		textStyle: new PIXI.TextStyle(defaultData.textStyle),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -57,7 +57,7 @@ window['array'] = [
 		speed: 4,
 		text: date,
 		textStyle: new PIXI.TextStyle(defaultData.textStyle),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -70,7 +70,7 @@ window['array'] = [
 			fontWeight: 900,
 			fill: [0xffffff]
 		}),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -86,7 +86,7 @@ window['array'] = [
 			// wordWrapWidth: 30, // 長度多少就斷行
 			// breakWords: true
 		}),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -102,7 +102,7 @@ window['array'] = [
 			// wordWrapWidth: 30, // 長度多少就斷行
 			// breakWords: true
 		}),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -115,7 +115,7 @@ window['array'] = [
 			fontWeight: 700,
 			fill: [0xffffff],
 		}),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -128,7 +128,7 @@ window['array'] = [
 			fontWeight: 400,
 			fill: [0xffffff],
 		}),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
 		container: null,
@@ -141,34 +141,29 @@ window['array'] = [
 			fontWeight: 400,
 			fill: [0xffffff],
 		}),
-		direction: 'horizontal'
+		custom: false
 	},
 	{
-		// container: null,
-		// inner: null,
-		// speed: 3,
-		// text: '第一月台列車即將進站',
-		// textStyle: new PIXI.TextStyle({
-		// 	fontSize: 40,
-		// 	fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
-		// 	fontWeight: 700,
-		// 	fill: [0xffffff],
-		// 	// wordWrap: true, // 啟用斷行
-		// 	// wordWrapWidth: 30, // 長度多少就斷行
-		// 	// breakWords: true
-		// }),
-		// direction: 'vertical'
+		container: null,
+		inner: null,
+		speed: 3,
+		text: '測試午間新聞頭條',
+		textStyle: new PIXI.TextStyle({
+			fontSize: 68,
+			fontFamily: '"Noto Sans S Chinese", "sourcehansans-tc", "source-han-sans-traditional", "Noto Sans TC", "Microsoft JhengHei", Tahoma, Verdana, Arial, sans-serif',
+			fontWeight: 700,
+			fill: [0xffffff],
+			// wordWrap: true, // 啟用斷行
+			// wordWrapWidth: 30, // 長度多少就斷行
+			// breakWords: true
+		}),
+		custom: true
 	}
 ];
 
-gui.add(array[0], 'text').name('Container 1');
-gui.add(array[1], 'text').name('Container 2');
-gui.add(array[2], 'text').name('Container 3');
-gui.add(array[3], 'text').name('Container 4');
-gui.add(array[4], 'text').name('Container 5');
-gui.add(array[5], 'text').name('Container 6');
-gui.add(array[6], 'text').name('Container 7');
-gui.add(array[7], 'text').name('Container 8');
+for (let i = 0; i < array.length; i++) {
+	gui.add(array[i], 'text').name('Container ' + (i + 1));
+}
 
 function runThree() {
 
@@ -227,14 +222,24 @@ function runThree() {
 		cube.worldToLocal(pIntersect);
 		console.log(pIntersect);
 
-		if (pIntersect.x > -5 && pIntersect.x < 5 && pIntersect.y < 5 && pIntersect.y > 3.8) {
+		if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < 5 && pIntersect.y > 3.8) {
 			alert(array[0].text)
-		} else if (pIntersect.x > -5 && pIntersect.x < 5 && pIntersect.y < 3.8 && pIntersect.y > 2.6) {
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < 3.8 && pIntersect.y > 2.6) {
 			alert(array[1].text)
-		} else if (pIntersect.x > -5 && pIntersect.x < 5 && pIntersect.y < 2.6 && pIntersect.y > 0) {
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < 2.6 && pIntersect.y > 0) {
 			alert(array[2].text)
-		} else if (pIntersect.x > -5 && pIntersect.x < 5 && pIntersect.y < 0 && pIntersect.y > -3.4) {
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < 0 && pIntersect.y > -0.9) {
 			alert(array[3].text)
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < -0.9 && pIntersect.y > -2) {
+			alert(array[4].text)
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < -2 && pIntersect.y > -3.4) {
+			alert(array[5].text)
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < -3.4 && pIntersect.y > -4) {
+			alert(array[6].text)
+		} else if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < -4 && pIntersect.y > -5) {
+			alert(array[7].text)
+		} else if (pIntersect.x > -5 && pIntersect.x < -3.3 && pIntersect.y < 5 && pIntersect.y > -5) {
+			alert(array[8].text)
 		}
 
 		let sprite = new THREE.Sprite(spriteMat);
@@ -311,9 +316,30 @@ function runPixi() {
 		container.buttonMode = true;
 		container.click = () => { console.log(array[i].text); }
 
-		// if (array[i].direction == 'vertical') {
+		if (array[i].custom == true) {
 
-		// } else {
+			console.log(array[i]);
+
+			inner.x = 200;
+			inner.y = 0;
+			container.addChild(inner);
+			app.stage.addChild(container);
+
+			while (container.width <= app.view.width) {
+				text = new PIXI.Text(array[i].text + ' ', array[i].textStyle);
+				text.x += inner.width;
+				text.y = 7;
+				inner.addChild(text);
+			}
+
+			container.x = container.height + 10;
+			container.y = 0;
+			// container.pivot.x = 50;
+			// container.pivot.y = container.height / 2;
+			container.rotation = 90 * (Math.PI / 180);
+
+		} else {
+
 			inner.x = 200;
 			inner.y = 0;
 			container.y = allContainersHeight;
@@ -329,17 +355,18 @@ function runPixi() {
 			}
 			console.log('container.width', container.width);
 			console.log('container.height', container.height);
-		// }
 
-		allContainersHeight += container.height;
+			allContainersHeight += container.height;
 
-		let mask = new PIXI.Graphics();
-		mask.beginFill(0xff0000)
-		mask.drawRect(100, 0, app.view.width - 100, container.height)
-		mask.endFill();
+			let mask = new PIXI.Graphics();
+			mask.beginFill(0xff0000)
+			mask.drawRect(100, 0, app.view.width - 100, container.height)
+			mask.endFill();
 
-		// container.mask = mask;
-		// container.addChild(mask)
+			container.mask = mask;
+			container.addChild(mask)
+
+		}
 
 		// var a = new PIXI.Graphics()
 		// 		.beginFill(0xff0000)
