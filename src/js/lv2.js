@@ -243,7 +243,7 @@ function runThree() {
 		}
 
 		let sprite = new THREE.Sprite(spriteMat);
-		sprite.position.copy(o.face.normal).multiplyScalar(0.25).add(pIntersect);
+		sprite.position.copy(o.face.normal).multiplyScalar(0.4).add(pIntersect);
 		cube.add(sprite);
 
 	}

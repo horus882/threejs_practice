@@ -135,7 +135,6 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/sample.html'),
-            minify: true,
             inject: 'body',
             chunks: ['sample'],
             filename: 'sample.html',
@@ -145,7 +144,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/lv1.html'),
-            minify: true,
+            // minify: true,
             inject: 'body',
             chunks: ['lv1'],
             filename: 'lv1.html',
@@ -156,7 +155,6 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/lv2.html'),
-            minify: true,
             inject: 'body',
             chunks: ['lv2'],
             filename: 'lv2.html',
