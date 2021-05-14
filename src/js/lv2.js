@@ -282,8 +282,8 @@ function runThree() {
 
 function runPixi() {
 
-	let type = "WebGL";
-	if (!PIXI.utils.isWebGLSupported()) { type = "canvas"; }
+	let type = 'WebGL';
+	if (!PIXI.utils.isWebGLSupported()) { type = 'canvas'; }
 	PIXI.utils.sayHello(type);
 
 	app = new PIXI.Application({
