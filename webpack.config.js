@@ -21,7 +21,9 @@ module.exports = {
     entry: {
         sample: ['./js/sample.js'],
         lv1: ['./js/lv1.js'],
-        lv2: ['./js/lv2.js']
+        lv2: ['./js/lv2.js'],
+        lv4: ['./js/lv4.js'],
+        lv5: ['./js/lv5.js'],
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -94,17 +96,29 @@ module.exports = {
             {
                 test: /\.(jpg|png|gif|svg)$/,
                 use: [
+                    // {
+                    //     loader: 'file-loader',
+                    //     options:
+                    //     {
+                    //         name: '[name].[hash:6].[ext]',
+                    //         outputPath: 'assets/images/',
+                    //         publicPath: 'assets/images/',
+                    //         emitFile: true,
+                    //         esModule: false
+                    //     }
+                    // },
                     {
-                        loader: 'file-loader',
-                        options:
-                        {
-                            name: '[name].[hash:6].[ext]',
-                            outputPath: 'assets/images/',
-                            publicPath: 'assets/images/',
-                            emitFile: true,
-                            esModule: false
+                        loader: 'url-loader',
+                        options: {
+                            limit: false,
+                            // esModule: false,
+                            name: '[path][name].[ext]?[hash:8]',
+                            context: path.resolve(__dirname, 'src'),
+                            publicPath: '../',
+                            fallback: require.resolve('file-loader'),
+                            // outputPath: './'
                         }
-                    }
+                    },
                 ]
             },
 
@@ -118,6 +132,26 @@ module.exports = {
                         {
                             outputPath: 'assets/fonts/'
                         }
+                    }
+                ]
+            },
+
+            // Models
+            {
+                test: /\.(obj|fbx|mtl)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options:
+                        {
+                            name: '[name].[hash:6].[ext]',
+                            outputPath: 'assets/models/',
+                            publicPath: 'assets/models/',
+                        }
+                        // options:
+                        // {
+                        //     outputPath: 'assets/models/'
+                        // }
                     }
                 ]
             }
@@ -158,6 +192,24 @@ module.exports = {
             inject: 'body',
             chunks: ['lv2'],
             filename: 'lv2.html',
+            minify: {
+                removeRedundantAttributes: false
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/lv4.html'),
+            inject: 'body',
+            chunks: ['lv4'],
+            filename: 'lv4.html',
+            minify: {
+                removeRedundantAttributes: false
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './src/lv5.html'),
+            inject: 'body',
+            chunks: ['lv5'],
+            filename: 'lv5.html',
             minify: {
                 removeRedundantAttributes: false
             }
