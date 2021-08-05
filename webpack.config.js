@@ -138,13 +138,13 @@ module.exports = {
 
             // Models
             {
-                test: /\.(obj|fbx|mtl)$/,
+                test: /\.(obj|fbx|mtl|gltf|bin)$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options:
                         {
-                            name: '[name].[hash:6].[ext]',
+                            name: '[name].[ext]',
                             outputPath: 'assets/models/',
                             publicPath: 'assets/models/',
                         }

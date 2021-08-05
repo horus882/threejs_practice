@@ -9,13 +9,22 @@ import * as PIXI from 'pixi.js'
 import * as dat from 'dat.gui'
 
 import { OBJLoader } from './loaders/OBJLoader.js';
+import { GLTFLoader } from './loaders/GLTFLoader.js';
 import model from '../assets/models/medals_v1.obj';
+import sample from '../assets/models/Duck.gltf';
+import '../assets/models/Duck0.bin';
+import '../assets/models/DuckCM.png';
 
-const objLoader = new OBJLoader();
-const gui 		= new dat.GUI();
+const objLoader  = new OBJLoader();
+const gltfLoader = new GLTFLoader();
+const gui 		 = new dat.GUI();
 
 let app  = null,
 	text = null;
+
+var medalModel;
+
+console.log(gltfLoader)
 
 const date = new Date().toString();
 
@@ -168,9 +177,9 @@ function runThree() {
 	// scene.add(cube);
 	// cube.rotation.y = 0.5;
 
-	camera.position.x = 0;
+	camera.position.x = -2;
 	camera.position.y = 0;
-	camera.position.z = 5;
+	camera.position.z = 4.25;
 	camera.lookAt(0, 0, 0);
 
 	const cameraDebugger = gui.addFolder('Camera');
@@ -189,7 +198,7 @@ function runThree() {
 
 // 加入燈光 Start
 
-	const light = new THREE.HemisphereLight( 0xffffff, 0x333333, 0.5 );
+	const light = new THREE.HemisphereLight( 0xffffff, 0x666666, 0.8 );
 	scene.add( light );
 
 	// const pointLight = new THREE.PointLight(0xffffff, 0.35)
@@ -212,22 +221,65 @@ function runThree() {
 
 // 加入模型 Start
 
-	objLoader.load(
-		model,
+	// objLoader.load(
+	// 	model,
+	// 	function ( object ) {
+	// 		scene.add( object );
+	// 		// object.scale.x = 3;
+	// 		// object.scale.y = 3;
+	// 		// object.scale.z = 3;
+	// 		medalModel = object;
+
+	// 		medalModel.scale.set(1, 1, 1);
+	// 		medalModel.rotation.x = -0.6;
+	// 		medalModel.rotation.y = 0.1;
+	// 		medalModel.position.y = 0.45;
+	// 		// medalModel.material.color.set('0xffff00')
+	// 		// console.log('medalModel.material', medalModel.material)
+
+	// 		medalModel.traverse( function( child ) {
+	// 			if ( child instanceof THREE.Mesh ) {
+	// 				console.log(child);
+	// 				child.material = material;
+	// 			}
+	// 		} );
+
+
+	// 		const objDebugger = gui.addFolder('Object');
+
+	// 		objDebugger.add(medalModel.rotation, 'x').min(-10).max(10).step(0.1)
+	// 		objDebugger.add(medalModel.rotation, 'y').min(-10).max(10).step(0.1)
+	// 		objDebugger.add(medalModel.rotation, 'z').min(-10).max(10).step(0.1)
+
+	// 	},
+	// 	function ( xhr ) {
+	// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	// 	},
+	// 	function ( error ) {
+	// 		console.log( 'An error happened' );
+	// 	}
+	// );
+
+	gltfLoader.load(
+		sample,
 		function ( object ) {
-			scene.add( object );
+			scene.add( object.scene );
 			// object.scale.x = 3;
 			// object.scale.y = 3;
 			// object.scale.z = 3;
-			object.scale.set(1, 1, 1);
-			object.rotation.x = -0.5;
-			object.rotation.y = 0.5;
+				// object.scene.scale.set(1, 1, 1);
+				// object.scene.rotation.x = -0.6;
+				// object.scene.rotation.y = 0.1;
+				object.scene.position.x = 1.45;
+				object.scene.position.y = 0.45;
+			// object.material.color.set('0xffff00')
 			console.log(object)
-			const objDebugger = gui.addFolder('Object');
 
-			objDebugger.add(object.rotation, 'x').min(-10).max(10).step(0.1)
-			objDebugger.add(object.rotation, 'y').min(-10).max(10).step(0.1)
-			objDebugger.add(object.rotation, 'z').min(-10).max(10).step(0.1)
+			const sampleDebugger = gui.addFolder('Sample');
+
+			sampleDebugger.add(object.scene.position, 'x').min(-10).max(10).step(0.1)
+			sampleDebugger.add(object.scene.position, 'y').min(-10).max(10).step(0.1)
+			// sampleDebugger.add(object.rotation, 'z').min(-10).max(10).step(0.1)
 
 		},
 		function ( xhr ) {
@@ -246,7 +298,7 @@ function runThree() {
 	var spriteMat = new THREE.SpriteMaterial({
 		map: map,
 		alphaMap: map,
-		color: 'grey'
+		color: 'grey',
 	});
 
 	renderer.domElement.addEventListener('dblclick', onDoubleClick);
@@ -258,14 +310,16 @@ function runThree() {
 
 		raycaster.setFromCamera(mouse, camera);
 
-		let intersects = raycaster.intersectObject(cube);
+		console.log(medalModel)
+
+		let intersects = raycaster.intersectObject(medalModel, true);
 
 		if (intersects.length < 1) return;
 
 		let o = intersects[0];
 
 		let pIntersect = o.point.clone();
-		cube.worldToLocal(pIntersect);
+		medalModel.worldToLocal(pIntersect);
 		console.log(pIntersect);
 
 		if (pIntersect.x > -3.3 && pIntersect.x < 5 && pIntersect.y < 5 && pIntersect.y > 3.8) {
@@ -289,8 +343,9 @@ function runThree() {
 		}
 
 		let sprite = new THREE.Sprite(spriteMat);
-		sprite.position.copy(o.face.normal).multiplyScalar(0.4).add(pIntersect);
-		cube.add(sprite);
+		sprite.scale.set(0.1, 0.1, 1)
+		sprite.position.copy(o.face.normal).multiplyScalar(0.1).add(pIntersect);
+		medalModel.add(sprite);
 
 	}
 
@@ -336,9 +391,9 @@ function runPixi() {
 		width: 600,                 // 寬度
 		height: 600,                // 高度
 		antialias: true,            // 反鋸齒
-		backgroundColor: 0x000000,  // 背景色
-		// transparent: false, 		// default: false
-		// resolution: 1,      		// default: 1
+		// backgroundColor: 0x000000,  // 背景色
+		transparent: true, 		// default: false
+		resolution: 2,      		// default: 1
 		forceCanvas: true   		// 強制使用 Canvas
 	});
 
