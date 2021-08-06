@@ -10,6 +10,7 @@ import * as dat from 'dat.gui'
 
 import { OBJLoader } from './loaders/OBJLoader.js';
 import { GLTFLoader } from './loaders/GLTFLoader.js';
+// import model from '../assets/models/medals_v1.obj';
 import model from '../assets/models/medals_v1.obj';
 import sample from '../assets/models/Duck.gltf';
 import '../assets/models/Duck0.bin';
@@ -198,7 +199,7 @@ function runThree() {
 
 // 加入燈光 Start
 
-	const light = new THREE.HemisphereLight( 0xffffff, 0x666666, 0.8 );
+	const light = new THREE.HemisphereLight( 0xffffff, 0x333333, 0.5 );
 	scene.add( light );
 
 	// const pointLight = new THREE.PointLight(0xffffff, 0.35)
@@ -221,44 +222,51 @@ function runThree() {
 
 // 加入模型 Start
 
-	// objLoader.load(
-	// 	model,
-	// 	function ( object ) {
-	// 		scene.add( object );
-	// 		// object.scale.x = 3;
-	// 		// object.scale.y = 3;
-	// 		// object.scale.z = 3;
-	// 		medalModel = object;
+	objLoader.load(
+		model,
+		function ( object ) {
+			scene.add( object );
+			// object.scale.x = 3;
+			// object.scale.y = 3;
+			// object.scale.z = 3;
+			medalModel = object;
 
-	// 		medalModel.scale.set(1, 1, 1);
-	// 		medalModel.rotation.x = -0.6;
-	// 		medalModel.rotation.y = 0.1;
-	// 		medalModel.position.y = 0.45;
-	// 		// medalModel.material.color.set('0xffff00')
-	// 		// console.log('medalModel.material', medalModel.material)
+			medalModel.scale.set(1, 1, 1);
+			medalModel.rotation.x = -0.6;
+			medalModel.rotation.y = 0.1;
+			medalModel.position.y = 0.45;
+			// medalModel.material.color.set('0xffff00')
+			// console.log('medalModel.material', medalModel.material)
+			console.log(medalModel);
+			// medalModel.traverse( function( child, index ) {
+			// 	if ( child instanceof THREE.Mesh ) {
+			// 		console.log(child, index);
+			// 		child.material = material;
+			// 	}
+			// } );
+			medalModel.traverse( function( child ) {
+				if ( child.isMesh ) {
+					// material.normalMapType = THREE.ObjectSpaceNormalMap;
+					console.log(child.material);
+					child.material = material;
+				}
+			} );
 
-	// 		medalModel.traverse( function( child ) {
-	// 			if ( child instanceof THREE.Mesh ) {
-	// 				console.log(child);
-	// 				child.material = material;
-	// 			}
-	// 		} );
 
+			const objDebugger = gui.addFolder('Object');
 
-	// 		const objDebugger = gui.addFolder('Object');
+			objDebugger.add(medalModel.rotation, 'x').min(-10).max(10).step(0.1)
+			objDebugger.add(medalModel.rotation, 'y').min(-10).max(10).step(0.1)
+			objDebugger.add(medalModel.rotation, 'z').min(-10).max(10).step(0.1)
 
-	// 		objDebugger.add(medalModel.rotation, 'x').min(-10).max(10).step(0.1)
-	// 		objDebugger.add(medalModel.rotation, 'y').min(-10).max(10).step(0.1)
-	// 		objDebugger.add(medalModel.rotation, 'z').min(-10).max(10).step(0.1)
-
-	// 	},
-	// 	function ( xhr ) {
-	// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-	// 	},
-	// 	function ( error ) {
-	// 		console.log( 'An error happened' );
-	// 	}
-	// );
+		},
+		function ( xhr ) {
+			console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+		},
+		function ( error ) {
+			console.log( 'An error happened' );
+		}
+	);
 
 	gltfLoader.load(
 		sample,
@@ -273,7 +281,7 @@ function runThree() {
 				object.scene.position.x = 1.45;
 				object.scene.position.y = 0.45;
 			// object.material.color.set('0xffff00')
-			console.log(object)
+			// console.log(object)
 
 			const sampleDebugger = gui.addFolder('Sample');
 
@@ -418,7 +426,7 @@ function runPixi() {
 
 		if (array[i].custom == true) {
 
-			console.log(array[i]);
+			// console.log(array[i]);
 
 			inner.x = 200;
 			inner.y = 0;
