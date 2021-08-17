@@ -10,14 +10,19 @@ import * as dat from 'dat.gui'
 
 import { OBJLoader } from './loaders/OBJLoader.js';
 import { GLTFLoader } from './loaders/GLTFLoader.js';
+import { FBXLoader } from './loaders/FBXLoader.js';
 // import model from '../assets/models/medals_v1.obj';
 import model from '../assets/models/medals_v1.obj';
+import fbxmodel from '../assets/models/type02/medals_v2.fbx';
 import sample from '../assets/models/Duck.gltf';
 import '../assets/models/Duck0.bin';
 import '../assets/models/DuckCM.png';
 
+console.log(FBXLoader);
+
 const objLoader  = new OBJLoader();
 const gltfLoader = new GLTFLoader();
+const fbxLoader	 = new FBXLoader();
 const gui 		 = new dat.GUI();
 
 let app  = null,
@@ -222,28 +227,97 @@ function runThree() {
 
 // 加入模型 Start
 
-	objLoader.load(
-		model,
+	// objLoader.load(
+	// 	model,
+	// 	function ( object ) {
+	// 		scene.add( object );
+	// 		// object.scale.x = 3;
+	// 		// object.scale.y = 3;
+	// 		// object.scale.z = 3;
+	// 		medalModel = object;
+
+	// 		medalModel.scale.set(1, 1, 1);
+	// 		medalModel.rotation.x = -0.6;
+	// 		medalModel.rotation.y = 0.1;
+	// 		medalModel.position.y = 0.45;
+	// 		// medalModel.material.color.set('0xffff00')
+	// 		// console.log('medalModel.material', medalModel.material)
+	// 		console.log(medalModel);
+	// 		// medalModel.traverse( function( child, index ) {
+	// 		// 	if ( child instanceof THREE.Mesh ) {
+	// 		// 		console.log(child, index);
+	// 		// 		child.material = material;
+	// 		// 	}
+	// 		// } );
+	// 		medalModel.traverse( function( child ) {
+	// 			if ( child.isMesh ) {
+	// 				// material.normalMapType = THREE.ObjectSpaceNormalMap;
+	// 				console.log(child.material);
+	// 				child.material = material;
+	// 			}
+	// 		} );
+
+
+	// 		const objDebugger = gui.addFolder('Object');
+
+	// 		objDebugger.add(medalModel.rotation, 'x').min(-10).max(10).step(0.1)
+	// 		objDebugger.add(medalModel.rotation, 'y').min(-10).max(10).step(0.1)
+	// 		objDebugger.add(medalModel.rotation, 'z').min(-10).max(10).step(0.1)
+
+	// 	},
+	// 	function ( xhr ) {
+	// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	// 	},
+	// 	function ( error ) {
+	// 		console.log( 'An error happened' );
+	// 	}
+	// );
+
+	// gltfLoader.load(
+	// 	sample,
+	// 	function ( object ) {
+	// 		scene.add( object.scene );
+	// 		// object.scale.x = 3;
+	// 		// object.scale.y = 3;
+	// 		// object.scale.z = 3;
+	// 			// object.scene.scale.set(1, 1, 1);
+	// 			// object.scene.rotation.x = -0.6;
+	// 			// object.scene.rotation.y = 0.1;
+	// 			object.scene.position.x = 1.45;
+	// 			object.scene.position.y = 0.45;
+	// 		// object.material.color.set('0xffff00')
+	// 		// console.log(object)
+
+	// 		// const sampleDebugger = gui.addFolder('Sample');
+
+	// 		// sampleDebugger.add(object.scene.position, 'x').min(-10).max(10).step(0.1)
+	// 		// sampleDebugger.add(object.scene.position, 'y').min(-10).max(10).step(0.1)
+	// 		// sampleDebugger.add(object.rotation, 'z').min(-10).max(10).step(0.1)
+
+	// 	},
+	// 	function ( xhr ) {
+	// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	// 	},
+	// 	function ( error ) {
+	// 		console.log( 'An error happened' );
+	// 	}
+	// );
+
+	fbxLoader.load(
+		fbxmodel,
 		function ( object ) {
 			scene.add( object );
-			// object.scale.x = 3;
-			// object.scale.y = 3;
-			// object.scale.z = 3;
+			object.scale.x = 0.0095;
+			object.scale.y = 0.0095;
+			object.scale.z = 0.0095;
+				// object.scene.scale.set(1, 1, 1);
+				// object.scene.rotation.x = -0.6;
+				// object.scene.rotation.y = 0.1;
+			// object.position.x = 1.45;
+			// object.position.y = 0.45;
+			// object.material.color.set('0xffff00')
+			// console.log(object)
 			medalModel = object;
-
-			medalModel.scale.set(1, 1, 1);
-			medalModel.rotation.x = -0.6;
-			medalModel.rotation.y = 0.1;
-			medalModel.position.y = 0.45;
-			// medalModel.material.color.set('0xffff00')
-			// console.log('medalModel.material', medalModel.material)
-			console.log(medalModel);
-			// medalModel.traverse( function( child, index ) {
-			// 	if ( child instanceof THREE.Mesh ) {
-			// 		console.log(child, index);
-			// 		child.material = material;
-			// 	}
-			// } );
 			medalModel.traverse( function( child ) {
 				if ( child.isMesh ) {
 					// material.normalMapType = THREE.ObjectSpaceNormalMap;
@@ -252,41 +326,10 @@ function runThree() {
 				}
 			} );
 
-
-			const objDebugger = gui.addFolder('Object');
-
-			objDebugger.add(medalModel.rotation, 'x').min(-10).max(10).step(0.1)
-			objDebugger.add(medalModel.rotation, 'y').min(-10).max(10).step(0.1)
-			objDebugger.add(medalModel.rotation, 'z').min(-10).max(10).step(0.1)
-
-		},
-		function ( xhr ) {
-			console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-		},
-		function ( error ) {
-			console.log( 'An error happened' );
-		}
-	);
-
-	gltfLoader.load(
-		sample,
-		function ( object ) {
-			scene.add( object.scene );
-			// object.scale.x = 3;
-			// object.scale.y = 3;
-			// object.scale.z = 3;
-				// object.scene.scale.set(1, 1, 1);
-				// object.scene.rotation.x = -0.6;
-				// object.scene.rotation.y = 0.1;
-				object.scene.position.x = 1.45;
-				object.scene.position.y = 0.45;
-			// object.material.color.set('0xffff00')
-			// console.log(object)
-
 			const sampleDebugger = gui.addFolder('Sample');
 
-			sampleDebugger.add(object.scene.position, 'x').min(-10).max(10).step(0.1)
-			sampleDebugger.add(object.scene.position, 'y').min(-10).max(10).step(0.1)
+			sampleDebugger.add(object.position, 'x').min(-10).max(10).step(0.01)
+			sampleDebugger.add(object.position, 'y').min(-10).max(10).step(0.01)
 			// sampleDebugger.add(object.rotation, 'z').min(-10).max(10).step(0.1)
 
 		},
